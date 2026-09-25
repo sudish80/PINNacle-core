@@ -36,7 +36,7 @@ python3 burgers_pinn.py --adam_iters 8000 --lbfgs_max_iter 1200 --anneal --lhs -
 
 ## Generated Loss Curve
 
-![](burgers_loss_curve.png)
+![](results/burgers_loss_curve.png)
 
 *The loss curve above was captured from the hard‑constraint run (adam 8000 / lbfgs 1200) on the T4 runtime.*
 
