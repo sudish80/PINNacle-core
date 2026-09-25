@@ -34,11 +34,42 @@ python3 burgers_pinn.py --adam_iters 8000 --lbfgs_max_iter 1200 --anneal --lhs -
 | **Hard + full budget** `adam 15000 / lbfgs 2500` | — | **≈1e‑2 – 1e‑3** (expected) | — | Was running when session was interrupted; would need ~3‑5 min more. |
 | **PINNacle ext – beam1d** | 30 / 10 | **0.0031** | 0.75 | Successfully trained on T4; ext suite (cahn / helmholtz / Fourier) share the same API. |
 
+## Comparison Plot
+
+![](results/benchmark_rel_l2_comparison.png)
+
+*The chart above compares REL_L2 across all benchmarked configs on the T4 runtime.*
+
 ## Generated Loss Curve
 
-![](results/burgers_loss_curve.png)
+![](results/loss_curve_hard8k.png)
 
 *The loss curve above was captured from the hard‑constraint run (adam 8000 / lbfgs 1200) on the T4 runtime.*
+
+## Directory Highlights
+
+- `burgers_pinn.py` — canonical, complete Burgers PINN module (local reference; deployed as `/content/burgers_pinn.py` on Colab).
+- `pinnacle_ext/` — extensible suite (arch.py, problems.py, engine.py, methods.py, config.py, uncertainty.py, consistency.py, inverse.py, certified.py, checkpoint.py, tests/).
+- `PINN_Master_Report.md` — full written report with methodology, diagnostics, and extra experiments.
+- `PINNacle_Burgers_GPU_Annealed_bench.ipynb` — Colab notebook reproducing the GPU benchmark.
+- `burgers_colab_gpu_bench.py` — self‑contained GPU benchmark (do **not** use; broken standalone).
+- `opencode.json` — opencode MCP server registration (colab‑mcp, 60 s timeout).
+
+## Ext Suite Quick‑Start (T4)
+
+```bash
+python3 run.py --problem beam1d --adams 30 --lbfgs 10 --hard
+# → rel_l2 ≈ 0.0031
+
+python3 run.py --problem cahn --adams 30 --lbfgs 10
+# → (similar pipeline)
+
+python3 run.py --problem helmholtz --adams 30 --lbfgs 10
+# → (similar pipeline)
+
+python3 run.py --problem fourier --adams 30 --lbfgs 10
+# → (similar pipeline)
+```
 
 ## Directory Highlights
 
